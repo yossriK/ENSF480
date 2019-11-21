@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-
+import server.model.*;
 
 public class ServerController {
 	
@@ -44,7 +44,7 @@ public class ServerController {
 	 * @throws IOException
 	 */
 	public void runServer() throws IOException {
-	
+		Person user=null;
 		try {
 			while (true) {
 				
@@ -54,6 +54,23 @@ public class ServerController {
 				System.out.println(recieved+" in server");
 				
 				out.println("the server recieved your message and is sending back");
+				
+				switch(recieved) {
+				case ("1"):
+					System.out.println("in case 1");
+					 user=new Renter (new Name("yoss","hai","khal"),new Address("Adf","adsf","adsf",58),new BirthDate(29,5,1999));
+					break;
+				case("2"):
+					user=new Manager (new Name("yoss","hai","khal"),new Address("Adf","adsf","adsf",58),new BirthDate(29,5,1999));
+				break;
+				case("3"):
+					user=new Landlord (new Name("yoss","hai","khal"),new Address("Adf","adsf","adsf",58),new BirthDate(29,5,1999));
+				break;
+				case("4"):
+					((Renter) user).listAll();
+				break;
+				
+				}	
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
