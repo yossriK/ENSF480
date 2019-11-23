@@ -1,3 +1,4 @@
+package ClientGUI;
 
 import java.awt.Color;
 import java.awt.Font;

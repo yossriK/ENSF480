@@ -1,3 +1,4 @@
+package ClientGUI;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;

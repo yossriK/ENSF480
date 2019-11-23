@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.SQLException;
+
 import server.model.*;
 
 public class ServerController {
@@ -42,35 +44,25 @@ public class ServerController {
 	 * Runs the Server
 	 * in case of exception close all buffers
 	 * @throws IOException
+	 * @throws SQLException 
 	 */
-	public void runServer() throws IOException {
-		Person user=null;
+	public void runServer() throws IOException, SQLException {
+		Person user=new Renter (new Name("yoss","hai","khal"),new Address("Adf","adsf","adsf",58),new BirthDate(29,5,1999));
+
 		try {
 			while (true) {
 				
+				String recieved=in.readLine();// what i  recieve from socket
 				
 				
-				String recieved=in.readLine();
-				System.out.println(recieved+" in server");
 				
-				out.println("the server recieved your message and is sending back");
+			
+				if(recieved.toString().startsWith("SEARCH")) {
+					out.println(((Renter) user).Search(recieved));		// I get a string back from renter that I will write into socket from here
+					
+				}
 				
-				switch(recieved) {
-				case ("1"):
-					System.out.println("in case 1");
-					 user=new Renter (new Name("yoss","hai","khal"),new Address("Adf","adsf","adsf",58),new BirthDate(29,5,1999));
-					break;
-				case("2"):
-					user=new Manager (new Name("yoss","hai","khal"),new Address("Adf","adsf","adsf",58),new BirthDate(29,5,1999));
-				break;
-				case("3"):
-					user=new Landlord (new Name("yoss","hai","khal"),new Address("Adf","adsf","adsf",58),new BirthDate(29,5,1999));
-				break;
-				case("4"):
-					((Renter) user).listAll();
-				break;
 				
-				}	
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -97,9 +89,10 @@ public class ServerController {
 	 * 
 	 * @param args
 	 * @throws IOException
+	 * @throws SQLException 
 	 */
 	
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, SQLException {
 
 		ServerController myServer = new ServerController();
 		System.out.println("after accept");
